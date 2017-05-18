@@ -158,3 +158,50 @@ const (
     //...
 )
 ```
+
+# composite types
+
+## arrays
+
+```go
+var a1 [3]int
+var a2 [3]int = [3]int{1,2,3}
+var a3 := [...]int{1,2,3}
+```
+
+```go
+type Currency int
+const (
+        USD Currency = iota
+        EUR
+        GBP
+)
+symbol := [...]string{USD: "$", EUR: "e", GPG: "L"}
+fmt.Printf("%s", symbol[EUR])
+```
+
+```go
+a := [...]int{99: 0} //array of 100 items
+```
+
+```go
+a1 := [2]int{1,2}
+a2 := [..]int{1,2}
+a3 := [..]int{1,2,3}
+isSame1 := a1 == a2 // true
+isSame2 := a1 == a3 // false
+```
+
+```go
+func zero(arr *[32]byte) {
+        for i := range arr {
+                arr[i] = 0
+        }
+}
+```
+
+## slices
+
+```go
+
+```
