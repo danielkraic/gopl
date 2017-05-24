@@ -203,5 +203,180 @@ func zero(arr *[32]byte) {
 ## slices
 
 ```go
+a := []string{"a", "b"}
+a = append(a, "c")
+a = append(a, "d", "e")
+```
 
+```go
+a := make([]string, 0, 2)
+fmt.Printf("%v, len %d cap %d\n", a, len(a), cap(a))
+```
+
+```go
+months := []string{"jan", "feb" /* ... */}
+Q1 := months[1:4]
+Q2 := months[4:7]
+Q3 := months[7:10]
+Q4 := months[10:]
+```
+
+```go
+func nonempty(strings []string) []string {
+	i := 0
+	for _, val := range strings {
+		if val != "" {
+			strings[i] = val
+			i++
+		}
+	}
+	return strings[:i]
+}
+```
+
+```go
+func remove(strings []string, i int) []string {
+	copy(strings[i:], strings[i+1:])
+	return strings[:len(strings)-1]
+}
+```
+
+## maps
+
+```go
+m1 := make(map[string]int)
+
+m2 := map[string]int{
+    "a": 1,
+    "b": 2,
+}
+
+m2["c"] = 5
+m2["d"] += 10
+m2["e"]++
+
+delete(m2, "a")
+
+for k, c := range m2 {
+        fmt.Printf("%s: %s\n", k, v)
+}
+```
+
+```go
+if val, ok := m2["somekey"]; ok {
+    fmt.Printf("somekey val: %v\n", val)
+} else {
+    fmt.Printf("no value for somekey\n")
+}
+```
+
+```go
+keys := make([]string, 0, len(m2))
+for k := range m2 {
+    keys = append(keys, k)
+}
+
+sort.Strings(keys)
+for _, k := range keys {
+    fmt.Printf("%v: %v\n", k, m2[k])
+}
+```
+
+## structs
+
+```go
+type User struct {
+        id uint
+        Name, Email string
+}
+
+var u1 User
+u1.name = "N1"
+
+var u1p *User := &u1
+u1p.Name = "N2"
+
+pname := &u1.Name
+*name = "N3"
+
+u4 := User{10, "N4"}
+u5 := User{Name: "N5"}
+
+u6 := &User{Name: "N6"}
+```
+
+```go
+//string set
+seen := make(map[string]struct{})
+if _, ok := seen['N1']; !ok {
+        seen[s] = struct{}{}
+}
+```
+
+```go
+type Point {x, y int}
+
+func Scale(p *Point, factor int) {
+        p.x *= factor
+        p.y = p.y * factor         
+}
+```
+
+```go
+// comparing structs
+type Point struct {x, y int}
+p1 := Point{1, 2}
+p2 := Point{2, 1}
+
+isSame := p1 == p2 //false
+ 
+// may be used as a key
+ m1 := make(map[Point]int)
+```
+
+```go
+// struct embedding and anonymous fields
+type Point struct {
+        X, Y int
+}
+
+type Circle {
+        Point
+        Radius int
+}
+
+type Wheel struct {
+        Circle
+        Spokes int
+}
+
+var w1 Wheel
+w.X = 10
+w.Radius = 11
+w.Spokes = 12
+
+w2 := Wheel{
+        Circle: Circle{
+                Point: Point{X: 10, Y: 11},
+                Radius: 12,
+        }
+        Spokes: 13,
+}
+w3 := Wheel{Circle{Point{10,11}, 12}, 13}
+```
+
+## json
+
+```go
+type Movie struct {
+	Title string
+	Year int `json:"released"`
+	Color bool `json:"color,omitempty"`
+	Actors []string
+}
+
+data1, err1 := json.Marshal(&movies)
+data2, err2 := json.MarshalIndent(&movies, "", " ")
+var data3 []Movie
+err3 := json.Unmarshal(data2, &data3)
 ```
