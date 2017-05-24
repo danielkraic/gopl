@@ -30,4 +30,10 @@ func main() {
 	a5 := [...]int{1,2,3, 4}
 	printReverse(a5[:])
 
+	a := make([]string, 0, 2)
+	a = append(a, "a")
+	a = append(a, "b", "e")
+	a = append(a, "f", "g")
+	fmt.Printf("%v, len %d cap %d\n", a, len(a), cap(a))
+
 }
